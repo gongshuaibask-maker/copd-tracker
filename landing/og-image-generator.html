@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>OG Image Generator</title>
+<style>
+  body { margin: 0; padding: 40px; background: #333; text-align: center; }
+  canvas { border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+  button { margin: 20px 8px; padding: 10px 24px; font-size: 14px; background: #2E7D32; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
+</style>
+</head>
+<body>
+<h2 style="color:#fff">Product Hunt OG Image</h2>
+<canvas id="c" width="1200" height="630"></canvas>
+<br>
+<button onclick="download()">📥 Download OG Image (1200×630)</button>
+
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+
+// Background gradient
+const grad = ctx.createLinearGradient(0, 0, 0, 630);
+grad.addColorStop(0, '#1B5E20');
+grad.addColorStop(1, '#2E7D32');
+ctx.fillStyle = grad;
+ctx.fillRect(0, 0, 1200, 630);
+
+// Pattern overlay
+ctx.fillStyle = 'rgba(255,255,255,0.03)';
+for (let i = 0; i < 50; i++) {
+  ctx.beginPath();
+  ctx.arc(Math.random()*1200, Math.random()*630, Math.random()*80+20, 0, Math.PI*2);
+  ctx.fill();
+}
+
+// Lung icon (simplified)
+ctx.fillStyle = '#fff';
+ctx.globalAlpha = 0.15;
+ctx.beginPath();
+ctx.arc(600, 200, 120, 0, Math.PI*2);
+ctx.fill();
+ctx.globalAlpha = 1;
+
+// Title
+ctx.fillStyle = '#fff';
+ctx.font = 'bold 52px -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif';
+ctx.textAlign = 'center';
+ctx.fillText('慢阻肺自我管理助手', 600, 340);
+
+// Subtitle
+ctx.font = '26px -apple-system, "PingFang SC", sans-serif';
+ctx.fillStyle = '#C8E6C9';
+ctx.fillText('COPD Self-Management', 600, 390);
+
+// Tagline
+ctx.font = '18px -apple-system, sans-serif';
+ctx.fillStyle = '#A5D6A7';
+ctx.fillText('Offline-First Health Tracker · 12 Modules · 100% Private', 600, 420);
+
+// Badges
+const badges = ['100% 本地存储', '12 大功能模块', '完全免费', '开源', '隐私优先'];
+ctx.font = '18px -apple-system, sans-serif';
+let bx = 600 - (badges.length * 125) / 2 + 62;
+badges.forEach(b => {
+  ctx.fillStyle = 'rgba(255,255,255,0.12)';
+  ctx.fillRect(bx-57, 448, 114, 32);
+  ctx.fillStyle = '#fff';
+  ctx.fillText(b, bx, 471);
+  bx += 125;
+});
+
+// URL
+ctx.font = '20px monospace';
+ctx.fillStyle = 'rgba(255,255,255,0.5)';
+ctx.fillText('copd-selfcare.netlify.app', 600, 550);
+
+function download() {
+  const a = document.createElement('a');
+  a.href = c.toDataURL('image/png');
+  a.download = 'og-image.png';
+  a.click();
+}
+</script>
+</body>
+</html>

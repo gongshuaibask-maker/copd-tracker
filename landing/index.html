@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>慢阻肺自我管理助手 — 你的私人 COPD 健康管家</title>
+<meta name="description" content="一款纯本地化的慢阻肺(COPD)患者自我管理应用。12大功能模块，数据100%本地存储，无隐私风险。支持肺功能、症状评分、氧合监测、趋势图表、OCR识别、健康筛查。">
+<meta property="og:title" content="慢阻肺自我管理助手 — 你的私人 COPD 健康管家">
+<meta property="og:description" content="12大功能模块，数据100%本地存储。COPD 患者必备的自我管理工具。">
+<meta property="og:image" content="https://copd-selfcare.netlify.app/og-image.png">
+<meta property="og:type" content="website">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; color: #333; }
+  
+  /* Hero */
+  .hero { background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 40%, #43A047 100%); padding: 80px 20px; text-align: center; color: #fff; }
+  .hero img { width: 120px; height: 120px; border-radius: 28px; margin-bottom: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+  .hero h1 { font-size: 36px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+  .hero .tagline { font-size: 19px; opacity: 0.9; max-width: 500px; margin: 0 auto 28px; line-height: 1.6; }
+  .hero .badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); padding: 8px 18px; border-radius: 20px; font-size: 14px; }
+  .cta-btn { display: inline-block; margin-top: 32px; padding: 14px 40px; background: #fff; color: #2E7D32; font-size: 17px; font-weight: 700; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.15); transition: transform .2s; }
+  .cta-btn:hover { transform: translateY(-2px); }
+
+  /* Section */
+  section { padding: 64px 20px; max-width: 960px; margin: 0 auto; }
+  section h2 { font-size: 26px; text-align: center; margin-bottom: 40px; color: #1B5E20; }
+  
+  /* Features */
+  .features { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+  .feat-card { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); text-align: center; transition: transform .2s; }
+  .feat-card:hover { transform: translateY(-4px); }
+  .feat-card .icon { font-size: 36px; margin-bottom: 12px; }
+  .feat-card h3 { font-size: 16px; margin-bottom: 6px; color: #2E7D32; }
+  .feat-card p { font-size: 13px; color: #777; line-height: 1.5; }
+
+  /* Modules */
+  .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .mod-item { background: #E8F5E9; border-radius: 12px; padding: 16px 10px; text-align: center; font-size: 14px; font-weight: 600; color: #2E7D32; }
+
+  /* Screenshots */
+  .screenshots { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px; justify-content: center; flex-wrap: wrap; }
+  .screenshot-card { background: #fff; border-radius: 20px; padding: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 200px; text-align: center; }
+  .screenshot-card .mock { width: 176px; height: 320px; background: linear-gradient(180deg, #2E7D32, #FAFAFA 120px); border-radius: 16px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 40px; }
+  .screenshot-card span { font-size: 12px; color: #888; }
+
+  /* CTA */
+  .cta-section { text-align: center; background: #E8F5E9; border-radius: 20px; padding: 48px 20px; margin: 0 20px; }
+  .cta-section p { font-size: 16px; color: #555; margin-bottom: 24px; }
+  .store-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .store-btn { padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; }
+  .store-btn.ios { background: #000; color: #fff; }
+  .store-btn.android { background: #2E7D32; color: #fff; }
+
+  /* Footer */
+  footer { text-align: center; padding: 32px 20px; font-size: 13px; color: #999; }
+  footer a { color: #2E7D32; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 26px; }
+    .hero .tagline { font-size: 16px; }
+    .features { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <img src="icon-240.png" alt="COPD App Icon">
+  <h1>慢阻肺自我管理助手</h1>
+  <p class="tagline">🫁 12 大功能模块 · 数据 100% 本地存储 · 开源免费<br>COPD 患者必备的自我管理工具</p>
+  <div class="badges">
+    <span class="badge">📱 iOS + Android</span>
+    <span class="badge">🔒 隐私优先</span>
+    <span class="badge">🆓 完全免费</span>
+    <span class="badge">📊 趋势图表</span>
+    <span class="badge">🤖 OCR 识别</span>
+  </div>
+  <a href="#download" class="cta-btn">⬇️ 立即下载</a>
+</div>
+
+<!-- Why -->
+<section>
+  <h2>✨ 为什么选择我们？</h2>
+  <div class="features">
+    <div class="feat-card">
+      <div class="icon">🔒</div>
+      <h3>隐私优先</h3>
+      <p>所有数据存储在您的设备本地，不上传任何服务器，无隐私泄露风险</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon">📊</div>
+      <h3>专业全面</h3>
+      <p>覆盖肺功能、症状评分、氧合监测等 12 个功能模块，满足 COPD 全方位管理需求</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon">🤖</div>
+      <h3>智能识别</h3>
+      <p>内置 OCR 引擎，拍照或粘贴报告文本即可自动识别 20+ 项肺功能指标</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon">📈</div>
+      <h3>趋势可视化</h3>
+      <p>自动生成折线趋势图，血氧、心率、体重等指标变化一目了然</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon">🔔</div>
+      <h3>智能提醒</h3>
+      <p>支持每日指脉氧测量提醒、月度评分提醒、复查提醒，不再遗漏</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon">🆓</div>
+      <h3>完全免费</h3>
+      <p>开源项目，无广告、无订阅、无内购，永久免费使用</p>
+    </div>
+  </div>
+</section>
+
+<!-- Modules -->
+<section>
+  <h2>🧩 12 大功能模块</h2>
+  <div class="modules-grid">
+    <div class="mod-item">🫁 肺功能检查</div>
+    <div class="mod-item">🔬 气道炎症</div>
+    <div class="mod-item">📋 症状评分</div>
+    <div class="mod-item">🏃 运动耐力</div>
+    <div class="mod-item">💓 氧合呼吸</div>
+    <div class="mod-item">⚖️ 营养体重</div>
+    <div class="mod-item">🚨 急性加重</div>
+    <div class="mod-item">💊 用药疗效</div>
+    <div class="mod-item">🏥 合并症</div>
+    <div class="mod-item">🚭 戒烟管理</div>
+    <div class="mod-item">😴 睡眠监测</div>
+    <div class="mod-item">🏋️ 肺康复</div>
+  </div>
+</section>
+
+<!-- Screenshots -->
+<section>
+  <h2>📱 应用截图</h2>
+  <div class="screenshots">
+    <div class="screenshot-card"><div class="mock">🏠</div><span>首页仪表盘</span></div>
+    <div class="screenshot-card"><div class="mock">🫁</div><span>肺功能检查</span></div>
+    <div class="screenshot-card"><div class="mock">📋</div><span>症状评分</span></div>
+    <div class="screenshot-card"><div class="mock">📈</div><span>趋势图表</span></div>
+    <div class="screenshot-card"><div class="mock">🤖</div><span>OCR 识别</span></div>
+    <div class="screenshot-card"><div class="mock">📤</div><span>数据导出</span></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="download">
+  <div class="cta-section">
+    <h2>🚀 开始管理你的健康</h2>
+    <p>即将上架 App Store 和 Google Play，敬请期待！</p>
+    <div class="store-btns">
+      <a href="#" class="store-btn ios">🍎 App Store (即将上线)</a>
+      <a href="#" class="store-btn android">🤖 Google Play (即将上线)</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>
+    © 2026 慢阻肺自我管理助手 ·
+    <a href="privacy-policy/">隐私政策</a> ·
+    <a href="support/">技术支持</a> ·
+    <a href="https://github.com/gongshuai888/copd-tracker">GitHub</a>
+  </p>
+  <p style="margin-top:8px; color:#E65100;">⚠️ 本应用仅供健康管理参考，不构成医疗诊断或治疗建议。</p>
+</footer>
+
+</body>
+</html>

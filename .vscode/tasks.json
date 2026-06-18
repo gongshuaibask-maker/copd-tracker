@@ -1,0 +1,114 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "typecheck",
+			"type": "shell",
+			"command": "npm.cmd run typecheck",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "project-check",
+			"type": "shell",
+			"command": "npm.cmd run typecheck",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "fix-i18n",
+			"type": "shell",
+			"command": "cmd /c D:\\copdAPP\\scripts\\fix-and-check.bat"
+		},
+		{
+			"label": "fix-i18n-v2",
+			"type": "shell",
+			"command": "node D:\\copdAPP\\scripts\\fix-i18n-v2.js && cd /d D:\\copdAPP && npm.cmd run typecheck"
+		},
+		{
+			"label": "fix-v2",
+			"type": "shell",
+			"command": "cmd /c D:\\copdAPP\\scripts\\run-fixv2.bat"
+		},
+		{
+			"label": "safe-fix",
+			"type": "shell",
+			"command": "cmd /c D:\\copdAPP\\scripts\\safe-fix.bat"
+		},
+		{
+			"label": "fix-path",
+			"type": "shell",
+			"command": "node D:\\copdAPP\\scripts\\fix-path.js && cd /d D:\\copdAPP && npm.cmd run typecheck"
+		},
+		{
+			"label": "fixpath",
+			"type": "shell",
+			"command": "cmd /c D:\\copdAPP\\scripts\\fixpath-and-check.bat"
+		},
+		{
+			"label": "i18n-phase2",
+			"type": "shell",
+			"command": "cmd /c D:\\copdAPP\\scripts\\phase2-check.bat"
+		},
+		{
+			"label": "i18n-p2",
+			"type": "shell",
+			"command": "cmd /c \"node D:\\copdAPP\\scripts\\i18n-p2.js && cd /d D:\\copdAPP && npm.cmd run typecheck\""
+		},
+		{
+			"label": "ixp2",
+			"type": "shell",
+			"command": "D:\\copdAPP\\scripts\\run-i18n-p2.bat"
+		},
+		{
+			"label": "rebuild-icons",
+			"type": "shell",
+			"command": "D:\\copdAPP\\scripts\\rebuild-icons.bat"
+		},
+		{
+			"label": "rebuild-all",
+			"type": "shell",
+			"command": "D:\\copdAPP\\scripts\\rebuild-all.bat"
+		},
+		{
+			"label": "rebuild",
+			"type": "shell",
+			"command": "D:\\copdAPP\\scripts\\rebuild.bat"
+		},
+		{
+			"label": "use-icon",
+			"type": "shell",
+			"command": "D:\\copdAPP\\scripts\\use-user-icon.bat"
+		},
+		{
+			"label": "use-777",
+			"type": "shell",
+			"command": "node D:\\copdAPP\\scripts\\use-icon777.js && cd /d D:\\copdAPP && npm.cmd run typecheck"
+		},
+		{
+			"label": "run777",
+			"type": "shell",
+			"command": "D:\\copdAPP\\scripts\\run-777.bat"
+		},
+		{
+			"label": "icon7",
+			"type": "shell",
+			"command": "D:\\copdAPP\\scripts\\run-icon7.bat"
+		},
+		{
+			"label": "cleanup",
+			"type": "shell",
+			"command": "D:\\copdAPP\\scripts\\cleanup.bat"
+		},
+		{
+			"label": "final-clean",
+			"type": "shell",
+			"command": "D:\\copdAPP\\scripts\\final-clean.bat"
+		},
+		{
+			"label": "del-clean",
+			"type": "shell",
+			"command": "cmd /c del D:\\copdAPP\\scripts\\final-clean.bat"
+		}
+	]
+}

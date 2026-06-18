@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd * && npx *)",
+      "Bash(cd * && npm *)",
+      "Bash(python *)",
+      "Bash(pip *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(du *)",
+      "Bash(df *)",
+      "Bash(rm *)",
+      "Bash(mkdir *)",
+      "Bash(cd * && git *)",
+      "Bash(cd * && npx tsc --noEmit *)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebFetch(*)",
+      "WebSearch(*)"
+    ]
+  }
+}

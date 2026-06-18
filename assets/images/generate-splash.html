@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>COPD 启动屏生成器</title>
+<style>
+  body { font-family: sans-serif; text-align: center; padding: 20px; background: #1B5E20; }
+  .container { background: #fff; border-radius: 16px; padding: 24px; max-width: 600px; margin: 0 auto; }
+  h1 { color: #2E7D32; }
+  button { padding: 12px 32px; font-size: 16px; background: #2E7D32; color: #fff;
+           border: none; border-radius: 8px; cursor: pointer; margin: 8px; }
+  button:hover { background: #1B5E20; }
+  .preview { margin: 16px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.3); display: inline-block; }
+  canvas { display: block; }
+  .note { color: #666; font-size: 13px; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🫁 启动屏生成器</h1>
+<p>生成 iOS/Android 启动屏图片</p>
+
+<div class="preview" id="preview"></div>
+
+<button onclick="downloadSplash()">📥 下载启动屏 (1284×2778)</button>
+<button onclick="downloadSplashSmall()">📥 下载启动屏 (750×1334)</button>
+
+<p class="note">
+  <strong>iOS:</strong> 1284×2778 (iPhone 14 Pro Max)<br>
+  <strong>Android:</strong> 建议使用背景色 #2E7D32 配合图标
+</p>
+</div>
+
+<script>
+const SVG_DATA = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1284 2778" width="1284" height="2778">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2E7D32"/>
+      <stop offset="100%" style="stop-color:#1B5E20"/>
+    </linearGradient>
+  </defs>
+  <rect width="1284" height="2778" fill="url(#bg)"/>
+  <g transform="translate(642, 1200)">
+    <circle cx="0" cy="0" r="180" fill="#FFFFFF" opacity="0.1"/>
+    <circle cx="0" cy="0" r="140" fill="#FFFFFF" opacity="0.15"/>
+    <g transform="scale(0.7)">
+      <path d="M-140,0 C-140,-100 -100,-180 -40,-220 C-10,-240 10,-250 30,-240 C10,-220 -10,-180 -20,-140 C-40,-60 -40,80 -20,200 C-10,260 10,300 30,320 C10,310 -10,290 -40,280 C-100,260 -140,160 -140,0 Z" fill="#FFFFFF" opacity="0.9"/>
+      <path d="M140,0 C140,-100 100,-180 40,-220 C10,-240 -10,-250 -30,-240 C-10,-220 10,-180 20,-140 C40,-60 40,80 20,200 C10,260 -10,300 -30,320 C-10,310 10,290 40,280 C100,260 140,160 140,0 Z" fill="#FFFFFF" opacity="0.9"/>
+      <path d="M0,-200 C0,-220 0,-240 0,-260 C0,-280 -10,-290 -20,-300" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" opacity="0.9"/>
+    </g>
+    <text x="0" y="200" text-anchor="middle" fill="#FFFFFF" font-size="64" font-weight="bold" font-family="sans-serif" opacity="0.95">慢阻肺自我管理助手</text>
+    <text x="0" y="260" text-anchor="middle" fill="#C8E6C9" font-size="32" font-family="sans-serif" opacity="0.8">COPD Self-Management</text>
+  </g>
+  <text x="642" y="2600" text-anchor="middle" fill="#FFFFFF" font-size="24" font-family="sans-serif" opacity="0.4">v1.0.0</text>
+</svg>`;
+
+async function renderSplash(w, h) {
+  const canvas = document.createElement('canvas');
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext('2d');
+
+  const img = new Image();
+  const blob = new Blob([SVG_DATA], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  await new Promise((resolve) => {
+    img.onload = resolve;
+    img.src = url;
+  });
+  ctx.drawImage(img, 0, 0, w, h);
+  URL.revokeObjectURL(url);
+  return canvas;
+}
+
+function downloadBlob(canvas, filename) {
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, 'image/png');
+}
+
+function downloadSplash() { renderSplash(1284, 2778).then(c => downloadBlob(c, 'splash-1284x2778.png')); }
+function downloadSplashSmall() { renderSplash(750, 1334).then(c => downloadBlob(c, 'splash-750x1334.png')); }
+
+// Preview
+(async function init() {
+  const canvas = await renderSplash(324, 700);
+  canvas.style.width = '200px';
+  canvas.style.height = 'auto';
+  document.getElementById('preview').appendChild(canvas);
+})();
+</script>
+</body>
+</html>

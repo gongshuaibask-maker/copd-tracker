@@ -1,0 +1,43 @@
+node_modules/
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+.env
+
+# Local Netlify folder
+.netlify
+
+# Build output (deployed separately)
+deploy_app/
+
+# IDE
+.vscode/settings.json
+.vscode/launch.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated
+*.docx
+assets/images/qr.html
+assets/images/generate-icons.html
+assets/images/generate-splash.html
+assets/images/check-icons.ps1
+assets/images/generate-icons.py
+
+# Scripts (dev only)
+scripts/fix-i18n.ps1
+scripts/safe-inject.js
+scripts/run-icon7.bat
+scripts/use-icon7.js
+
+# Screenshot data (seeded test data concern)
+src/database/seedData.ts

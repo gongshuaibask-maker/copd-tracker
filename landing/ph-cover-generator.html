@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product Hunt Cover Image Generator</title>
+<style>
+  body { margin: 0; padding: 40px; background: #333; text-align: center; font-family: -apple-system, sans-serif; }
+  canvas { border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); max-width: 100%; }
+  button { margin: 20px 8px; padding: 12px 28px; font-size: 15px; font-weight: 600; background: #2E7D32; color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: background .2s; }
+  button:hover { background: #1B5E20; }
+  .info { color: #aaa; font-size: 13px; margin-top: 12px; }
+  .preview-wrap { display: inline-block; position: relative; }
+</style>
+</head>
+<body>
+<h2 style="color:#fff; margin-bottom:8px;">🎨 Product Hunt Cover Image</h2>
+<p style="color:#999; margin-bottom:20px;">1270 × 760 px — Right-click the image to save</p>
+
+<div class="preview-wrap">
+  <canvas id="c" width="1270" height="760"></canvas>
+</div>
+<br>
+<button onclick="downloadPNG()">📥 Download 1270×760 PNG</button>
+<button onclick="downloadJPG()">📥 Download 1270×760 JPG</button>
+
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+const W = 1270, H = 760;
+
+function draw() {
+  // === Background gradient ===
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, '#1B5E20');
+  grad.addColorStop(0.4, '#2E7D32');
+  grad.addColorStop(0.7, '#388E3C');
+  grad.addColorStop(1, '#43A047');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // === Decorative circles (subtle pattern) ===
+  ctx.fillStyle = 'rgba(255,255,255,0.04)';
+  for (let i = 0; i < 30; i++) {
+    ctx.beginPath();
+    ctx.arc(Math.random() * W, Math.random() * H, Math.random() * 120 + 40, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // === Left section: App icon placeholder ===
+  const iconX = 160, iconY = 200, iconSize = 180;
+  
+  // Icon background (rounded square)
+  ctx.shadowColor = 'rgba(0,0,0,0.3)';
+  ctx.shadowBlur = 40;
+  ctx.shadowOffsetY = 8;
+  
+  const r = 40;
+  ctx.beginPath();
+  ctx.moveTo(iconX + r, iconY);
+  ctx.lineTo(iconX + iconSize - r, iconY);
+  ctx.quadraticCurveTo(iconX + iconSize, iconY, iconX + iconSize, iconY + r);
+  ctx.lineTo(iconX + iconSize, iconY + iconSize - r);
+  ctx.quadraticCurveTo(iconX + iconSize, iconY + iconSize, iconX + iconSize - r, iconY + iconSize);
+  ctx.lineTo(iconX + r, iconY + iconSize);
+  ctx.quadraticCurveTo(iconX, iconY + iconSize, iconX, iconY + iconSize - r);
+  ctx.lineTo(iconX, iconY + r);
+  ctx.quadraticCurveTo(iconX, iconY, iconX + r, iconY);
+  ctx.closePath();
+  
+  const iconGrad = ctx.createLinearGradient(iconX, iconY, iconX + iconSize, iconY + iconSize);
+  iconGrad.addColorStop(0, '#2E7D32');
+  iconGrad.addColorStop(1, '#43A047');
+  ctx.fillStyle = iconGrad;
+  ctx.fill();
+
+  // Icon border
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Simplified lungs icon inside
+  ctx.fillStyle = 'rgba(255,255,255,0.9)';
+  ctx.shadowBlur = 0;
+  
+  // Left lung
+  ctx.beginPath();
+  ctx.ellipse(iconX + 65, iconY + 95, 35, 50, -0.2, 0, Math.PI * 2);
+  ctx.fill();
+  // Right lung
+  ctx.beginPath();
+  ctx.ellipse(iconX + 115, iconY + 95, 35, 50, 0.2, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Heart rate line
+  ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(iconX + 30, iconY + 140);
+  ctx.lineTo(iconX + 55, iconY + 140);
+  ctx.lineTo(iconX + 65, iconY + 125);
+  ctx.lineTo(iconX + 80, iconY + 150);
+  ctx.lineTo(iconX + 90, iconY + 130);
+  ctx.lineTo(iconX + 105, iconY + 155);
+  ctx.lineTo(iconX + 115, iconY + 140);
+  ctx.lineTo(iconX + 150, iconY + 140);
+  ctx.stroke();
+
+  // === Right section: Title and description ===
+  ctx.shadowBlur = 0;
+  const textX = 420;
+  
+  // App name
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 52px -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  ctx.fillText('COPD Self-Management', textX, 200);
+  ctx.fillText('Assistant', textX, 262);
+
+  // Tagline
+  ctx.font = '24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+  ctx.fillStyle = '#C8E6C9';
+  ctx.fillText('11 Tracking Modules · 100% Local Storage · Free & Open Source', textX, 340);
+
+  // Feature badges
+  const features = [
+    { icon: '🫁', text: 'Pulmonary Function' },
+    { icon: '💓', text: 'Daily Vitals & SpO₂' },
+    { icon: '📋', text: 'Symptom Scoring (CAT+mMRC)' },
+    { icon: '📊', text: 'Auto-generated Trend Charts' },
+    { icon: '🤖', text: 'OCR Report Recognition' },
+    { icon: '🔔', text: 'Smart Reminders' },
+  ];
+
+  ctx.font = '19px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+  ctx.textBaseline = 'middle';
+  
+  const startY = 410;
+  const col1X = textX;
+  const col2X = textX + 350;
+
+  features.forEach((f, i) => {
+    const col = i < 3 ? 0 : 1;
+    const row = i < 3 ? i : i - 3;
+    const fx = col === 0 ? col1X : col2X;
+    const fy = startY + row * 50;
+
+    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+    ctx.beginPath();
+    ctx.roundRect(fx - 10, fy - 16, 300, 42, 8);
+    ctx.fill();
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '18px -apple-system, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(f.icon + '  ' + f.text, fx + 8, fy + 1);
+  });
+
+  // === Bottom bar ===
+  ctx.fillStyle = 'rgba(0,0,0,0.15)';
+  ctx.fillRect(0, H - 60, W, 60);
+  
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.font = '16px -apple-system, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('iOS + Android · React Native · TypeScript · SQLite · Open Source', W / 2, H - 30);
+
+  // === Platform badges ===
+  const badgeY = 130;
+  ctx.fillStyle = 'rgba(255,255,255,0.15)';
+  ctx.beginPath();
+  ctx.roundRect(127, badgeY, 120, 32, 16);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = '14px -apple-system, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('📱 iOS + Android', 187, badgeY + 16);
+
+  ctx.fillStyle = 'rgba(255,255,255,0.15)';
+  ctx.beginPath();
+  ctx.roundRect(257, badgeY, 100, 32, 16);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.fillText('🆓 Free', 307, badgeY + 16);
+
+  ctx.fillStyle = 'rgba(255,255,255,0.15)';
+  ctx.beginPath();
+  ctx.roundRect(367, badgeY, 120, 32, 16);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.fillText('🔒 Privacy First', 427, badgeY + 16);
+}
+
+// roundRect polyfill for canvas
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, radii) {
+    const r = typeof radii === 'number' ? radii : (radii || 0);
+    this.moveTo(x + r, y);
+    this.lineTo(x + w - r, y);
+    this.quadraticCurveTo(x + w, y, x + w, y + r);
+    this.lineTo(x + w, y + h - r);
+    this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    this.lineTo(x + r, y + h);
+    this.quadraticCurveTo(x, y + h, x, y + h - r);
+    this.lineTo(x, y + r);
+    this.quadraticCurveTo(x, y, x + r, y);
+    return this;
+  };
+}
+
+draw();
+
+function downloadPNG() {
+  const link = document.createElement('a');
+  link.download = 'ph-cover-1270x760.png';
+  link.href = c.toDataURL('image/png');
+  link.click();
+}
+
+function downloadJPG() {
+  const link = document.createElement('a');
+  link.download = 'ph-cover-1270x760.jpg';
+  link.href = c.toDataURL('image/jpeg', 0.95);
+  link.click();
+}
+</script>
+</body>
+</html>
